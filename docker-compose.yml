@@ -1,0 +1,67 @@
+version: '3.8'
+services:
+  mariadb: 
+    container_name: servidor_mariadb
+    image: mariadb:latest
+    restart: "no" 
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_INITDB_SKIP_TZINFOi: 1
+      MYSQL_ROOT_HOST: 10.5.0.1
+      MYSQL_DATABASE: om_site
+      MYSQL_USER: om_user
+      MYSQL_PASSWORD: om_passwd
+      MYSQL_ROOT_HOST: "%"
+    ports:
+      - 3306:3306 
+    volumes:
+      - ./database_init:/docker-entrypoint-initdb.d
+      - ./data:/var/lib/mysql
+    networks:
+      om-docker:
+        ipv4_address: 10.5.0.2
+  webserver:
+    container_name: servidor_web_apache
+    image: php:apache
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    ports:
+      - 80:80
+      - 443:443
+    user: 1000:1000
+    build:
+      context: ./webserver_init
+      dockerfile: Dockerfile
+    environment:
+      XDEBUG_CONFIG: remote_host=10.5.0.1
+    volumes:
+      - ./src:/var/www/html
+      - ./logs/:/var/log/php/
+      - ~/.ssh/:/home/appuser/.ssh/
+    networks:
+      om-docker:
+        ipv4_address: 10.5.0.3
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mariadb
+      - webserver
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+    networks:
+      om-docker:
+        ipv4_address: 10.5.0.4
+
+networks:
+  om-docker:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
