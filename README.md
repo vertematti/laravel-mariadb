@@ -24,5 +24,7 @@ phpMyAdmin
 http://localhost:8001
 
 Database: om_site
+
 User: 	  om_user
+
 Password: om_passwd
