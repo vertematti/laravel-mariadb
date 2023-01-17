@@ -3,9 +3,9 @@ docker-compose with Laravel (9.47.0), PHP (8.2.1), MariaDB (10.10.2) and phpMyAd
 
 --------------------------
 
-docker exec -it servidor_web_apache bash -l
-
 Servername set like "dev.local" in "/webserver_init/conf.d/001-site.conf"; at Windows systems must be changed.
+
+docker exec -it servidor_web_apache bash -l
 
 Change filename .env.example to .env
 
