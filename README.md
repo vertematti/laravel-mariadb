@@ -1,8 +1,7 @@
 # laravel-mariadb
-docker-compose with Laravel (9.47.0), PHP (8.2.1), MariaDB (10.10.2) and phpMyAdmin (5.2.0) build in 01/16/2023.
+docker-compose with Laravel (9.47.0), PHP (8.2.1), MariaDB (10.10.2) and phpMyAdmin (5.2.0) built in 01/16/2023.
 
 --------------------------
-
 Servername set like "dev.local" in "/webserver_init/conf.d/001-site.conf"; at Windows systems must be changed.
 
 docker exec -it servidor_web_apache bash -l
