@@ -6,6 +6,8 @@ Servername set like "dev.local" in "/webserver_init/conf.d/001-site.conf"; at Wi
 
 docker exec -it servidor_web_apache bash -l
 
+composer install
+
 Change filename .env.example to .env
 
 php artisan storage:link  
